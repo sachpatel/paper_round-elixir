@@ -30,11 +30,12 @@ defmodule RoutePrinter do
     north = List.foldl(northern_houses, north, &mark_delivery_location/2)
     south = List.foldl(southern_houses, south, &mark_delivery_location/2)
 
-    if StreetPlan.get_no_of_houses_on_north_side(houses) > 0 && StreetPlan.get_no_of_houses_on_south_side(houses) > 0 do
-      road = case approach do
-        :approachOne -> mark_single_crossing(road, road_length)
-        :approachTwo -> mark_all_crossings(start_side, road, houses)
-      end
+    has_houses_on_both_sides = StreetPlan.get_no_of_houses_on_north_side(houses) > 0 && StreetPlan.get_no_of_houses_on_south_side(houses) > 0
+
+    road = cond do
+      has_houses_on_both_sides && approach == :approachOne -> mark_single_crossing(road, road_length)
+      has_houses_on_both_sides && approach == :approachTwo -> mark_all_crossings(start_side, road, houses)
+      true -> road
     end
 
     %{
