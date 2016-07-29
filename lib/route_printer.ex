@@ -34,7 +34,7 @@ defmodule RoutePrinter do
 
     road = cond do
       has_houses_on_both_sides && approach == :approachOne -> mark_single_crossing(road, road_length)
-      has_houses_on_both_sides && approach == :approachTwo -> mark_all_crossings(start_side, road, houses)
+      has_houses_on_both_sides && approach == :approachTwo -> mark_all_crossings(road, houses, start_side)
       true -> road
     end
 
@@ -60,18 +60,18 @@ defmodule RoutePrinter do
   defp mark_delivery_location(hs_no, acc), do: Map.put(acc, hs_no, "x")
 
   @spec mark_crossing(pos_integer, map()) :: map()
-  defp mark_crossing(hs_no, acc), do: Map.put(acc, hs_no, "|")
+  defp mark_crossing(acc, hs_no), do: Map.put(acc, hs_no, "|")
 
   @spec mark_single_crossing(map(), pos_integer) :: map()
-  defp mark_single_crossing(road, last_north_house), do: mark_crossing(last_north_house, road)
+  defp mark_single_crossing(road, last_north_house), do: mark_crossing(road, last_north_house)
 
-  @spec mark_all_crossings(side, map(), [integer]) :: map()
-  defp mark_all_crossings(_, road, []), do: road
-  defp mark_all_crossings(curr_side, road, [hs_no | rest_of_houses]) do
+  @spec mark_all_crossings(map(), [integer], side) :: map()
+  defp mark_all_crossings(road, [], _), do: road
+  defp mark_all_crossings(road, [hs_no | rest_of_houses], curr_side) do
     if StreetPlan.get_side(hs_no) !== curr_side do
-      mark_all_crossings(StreetPlan.get_side(hs_no), mark_crossing(hs_no, road), rest_of_houses)
+      mark_all_crossings(mark_crossing(road, hs_no), rest_of_houses, StreetPlan.get_side(hs_no))
     else
-      mark_all_crossings(curr_side, road, rest_of_houses)
+      mark_all_crossings(road, rest_of_houses, curr_side)
     end
   end
 
