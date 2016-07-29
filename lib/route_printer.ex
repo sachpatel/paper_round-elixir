@@ -4,15 +4,14 @@ defmodule RoutePrinter do
   Prints a delivery route in the form of a textual display
   """
 
-  @type side :: :north | :south
-  @type approach :: :approachOne | :approachTwo
+  @opaque approach :: :approachOne | :approachTwo
 
   @doc """
   Returns a map structure representing the north side if the street and marked
   locations for deliveries, similar to the southern side as well as the middle
   of the road with any crossings where applicable.
   """
-  @spec mark_route([integer], approach) :: map()
+  @spec mark_route([integer], approach) :: map
   def mark_route(houses, approach) do
     start_side = StreetPlan.get_side(List.first(houses))
     northern_houses = StreetPlan.get_houses_on_north_side(houses)
@@ -49,23 +48,23 @@ defmodule RoutePrinter do
   Outputs to console, the representation of a streetplan with marked delivery
   destinations.
   """
-  @spec print_route(map()) :: integer
+  @spec print_route(map) :: integer
   def print_route(marked_street_plan) do
     IO.puts marked_street_plan.north
     IO.puts marked_street_plan.road
     IO.puts marked_street_plan.south
   end
 
-  @spec mark_delivery_location(pos_integer, map()) :: map()
+  @spec mark_delivery_location(pos_integer, map) :: map
   defp mark_delivery_location(hs_no, acc), do: Map.put(acc, hs_no, "x")
 
-  @spec mark_crossing(pos_integer, map()) :: map()
+  @spec mark_crossing(pos_integer, map) :: map
   defp mark_crossing(acc, hs_no), do: Map.put(acc, hs_no, "|")
 
-  @spec mark_single_crossing(map(), pos_integer) :: map()
+  @spec mark_single_crossing(map, pos_integer) :: map
   defp mark_single_crossing(road, last_north_house), do: mark_crossing(road, last_north_house)
 
-  @spec mark_all_crossings(map(), [integer], side) :: map()
+  @spec mark_all_crossings(map, [integer], StreetPlan.side) :: map
   defp mark_all_crossings(road, [], _), do: road
   defp mark_all_crossings(road, [hs_no | rest_of_houses], curr_side) do
     if StreetPlan.get_side(hs_no) !== curr_side do
@@ -75,7 +74,7 @@ defmodule RoutePrinter do
     end
   end
 
-  @spec get_roadside_plan_sorted(map()) :: list(pos_integer)
+  @spec get_roadside_plan_sorted(map) :: list(pos_integer)
   defp get_roadside_plan_sorted(road_map) do
     Map.to_list(road_map)
     |> Enum.sort_by(& elem(&1, 0))

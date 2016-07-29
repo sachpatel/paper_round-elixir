@@ -8,7 +8,8 @@ Assumptions
 - The street layout input may not have an ordered set of housenumbers along a street (application will handle this)
 - An empty file provided to the application is invalid such that the application errors.
 - An incorrectly formed file is also an invalid file but will be checked to inform user of the issue.
-#- The file input could have layouts for multiple streets in a neighbourhood, thus the application will treat each line entry in the input file as a separate street.
+- The file input could have layouts for multiple streets in a neighbourhood, thus the application will treat each line entry in the input file as a separate street.
+- The input street house numbers can be comma delimited.
 
 
 Additional Notes
@@ -16,5 +17,5 @@ Additional Notes
 
 - Created application can be run using mix run \lib\paper_round.exs.
 - Used Elixir ExUnit test framework for writing unit tests.
-- Tests for the first User Story are in StreetLoaderTests.cs in the PaperRoundAssessment.Test project
-- Tests for the second User Story are in PaperRoundDeliveryApproachOneTests.cs and PaperRoundDeliveryApproachTwoTests.cs in the PaperRoundAssessment.Test project
+- Tests for the first User Story are in the test\street_plan_test.ex file.
+- Tests for the second User Story are in the test\delivery_approach_one_test.ex and test\delivery_approach_one_two.ex files.

@@ -22,6 +22,14 @@ defmodule StreetPlanTest do
     assert StreetPlan.load_street!("1 2 3 4 5 6 7 8") == [1, 2, 3, 4, 5, 6, 7, 8]
   end
 
+  test "Load street input that is comma delimited" do
+    assert StreetPlan.load_street!("1, 2, 3, 4, 5, 6, 7, 8") == [1, 2, 3, 4, 5, 6, 7, 8]
+  end
+
+  test "Load street input that is comma delimited with commas not next to elements" do
+    assert StreetPlan.load_street!("1 2, 3 4,  5 6 , 7 8") == [1, 2, 3, 4, 5, 6, 7, 8]
+  end
+
   test "Load street with incorrect input raises error" do
     assert_raise(ArgumentError, "Input was in an incorrect format.", fn -> StreetPlan.load_street!("1 2 3 4 5 5 6 7 8") end)
   end

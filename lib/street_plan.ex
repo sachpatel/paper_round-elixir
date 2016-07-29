@@ -5,20 +5,24 @@ defmodule StreetPlan do
   """
   @type side :: :north | :south
 
+  @split_reg_expr ~r/,?\s+/
+
   @spec is_valid?(String.t) :: boolean
   def is_valid?(houses) do
     cond do
       houses == "" -> false
       Regex.scan(~r/[A-Za-z]/, houses) |> Enum.count > 0 -> false
-      String.split(houses, " ") |> Enum.uniq |> Enum.count !== String.split(houses, " ") |> Enum.count -> false
+      String.split(houses, @split_reg_expr) |> Enum.uniq |> Enum.count !== String.split(houses, @split_reg_expr) |> Enum.count -> false
       true -> true
     end
   end
 
   @spec load_street!(String.t) :: [non_neg_integer]
   def load_street!(houses) do
+    houses = String.replace(houses, ",", " ")
+
     if is_valid?(houses) do
-      String.split(houses, " ") |> Stream.map(& String.to_integer(&1)) |> Enum.sort
+      String.split(houses, @split_reg_expr) |> Stream.map(& String.to_integer(&1)) |> Enum.sort
     else
       raise(ArgumentError, "Input was in an incorrect format.")
     end
