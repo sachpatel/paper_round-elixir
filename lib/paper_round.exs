@@ -1,5 +1,5 @@
 
-streets = File.read!(Path.join([__DIR__, "..", "Street2.txt"]))
+streets = File.read!(Path.join([__DIR__, "..", "Street1.txt"]))
           |> String.split("\r\n", trim: true)
 #|> Enum.map(fn x ->  String.split(x, ",", trim: true) end)
 #|> IO.inspect
@@ -14,16 +14,12 @@ for str <- streets do  #process_street(str)
   |> RoutePrinter.print_route
 
   IO.puts ""
-end
 
-IO.puts ""
-
-for str <- streets do
-  IO.puts "For Street: #{str}\nUsing approach: :approachTwo"
+  IO.puts "Using approach: :approachTwo"
 
   StreetPlan.load_street!(str)
   |> RoutePrinter.mark_route(:approachTwo)
   |> RoutePrinter.print_route
-
-  IO.puts ""
 end
+
+IO.puts ""
