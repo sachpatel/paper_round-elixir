@@ -1,6 +1,9 @@
 Paper Round
 -----------
 
+[![Build Status](https://travis-ci.org/sachpatel/paper_round-elixir.svg?branch=master)](https://travis-ci.org/sachpatel/paper_round-elixir)
+
+
 Please implement code to deliver the user stories below as described by their acceptance criteria (ACs).
 You should not need to spend more than two or three hours on the assignment. You should aim to deliver a working solution that is straightforward, but also maintainable and bug free. The intention is that it should be representative of what you would produce 'on the job'.
 You may find ambiguities in the requirements that in the 'real world' you would clarify with a business analyst. For the purpose of this test, please highlight any assumptions that you have had to make in developing your solution.
