@@ -10,11 +10,15 @@ defmodule DeliveryApproachOneTest do
   end
 
   test "Delivery Approach One route has no crossings (southern side)", state do
-    assert DeliveryApproachOne.get_crossings(state[:one_side_south]) == 0
+    assert DeliveryApproachOne.get_crossings(state[:one_side_south]) == 1
   end
 
   test "Delivery Approach One route has only one delivery with no crossings" do
     assert DeliveryApproachOne.get_crossings([3]) == 0
+  end
+
+  test "Delivery Approach One route has only one delivery with one crossing" do
+    assert DeliveryApproachOne.get_crossings([4]) == 1
   end
 
   test "Delivery Approach One route has a crossing", state do

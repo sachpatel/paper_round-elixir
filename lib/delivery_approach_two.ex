@@ -2,11 +2,9 @@ defmodule DeliveryApproachTwo do
   require Integer
 
   @spec get_crossings([pos_integer]) :: non_neg_integer
-  def get_crossings(houses) when length(houses) == 1, do: 0
   def get_crossings(houses) do
     cond do
       StreetPlan.get_no_of_houses_on_south_side(houses) == 0 -> 0
-      StreetPlan.get_no_of_houses_on_north_side(houses) == 0 -> 0
       true -> count_crossings(houses, 0, hd(houses) |> StreetPlan.get_side)
     end
   end
